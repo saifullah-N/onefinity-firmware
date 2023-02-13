@@ -148,6 +148,7 @@ module.exports = new Vue({
     "button-selector-view": require("./button-type-selector-view"),
     "complete-setup-view": require("./complete-setup-view"),
     "initial-network-view": require("./initial-network-view"),
+    "initial-setup-view":require('./initial-setup-view'),
     "z-slider-view":require('./z-slider-view'),
     "get-started-view": {
       template: "#get-started-view-template",
