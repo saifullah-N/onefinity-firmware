@@ -15,7 +15,7 @@
         open: false,
     };
     
-    let hash = location.hash == "initial-network"
+    let hash = location.hash == "#initial-network"
 
     let wifiConnectionDialog = {
         open: false,

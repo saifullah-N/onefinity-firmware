@@ -17,7 +17,7 @@
     export let open = false;
     export let network: WifiNetwork;
     export let rebootNow = false;
-    let rebooting = false;
+    let showMsg = false;
     let password = "";
     let showPassword = false;
 
@@ -30,10 +30,9 @@
     $: if (open) {
         password = "";
     }
-    let label = rebootNow ? connectOrDisconnect +' & Reboot' : connectOrDisconnect
     
     async function onConfirm() {
-        rebooting = true;
+        showMsg = true;
 
         await api.PUT("network", {
             wifi: {
@@ -46,8 +45,8 @@
     }
 </script>
 
-<MessageDialog open={rebooting} title="Rebooting" noaction>
-    Rebooting to apply Wifi changes...
+<MessageDialog open={showMsg} title="Rebooting" noaction>
+    Wifi will connect after reboot...
 </MessageDialog>
 
 <Dialog
@@ -108,7 +107,7 @@
             disabled={needPassword &&
                 (password.length < 8 || password.length > 128)}
         >
-            <Label>{label}</Label>
+            <Label>{connectOrDisconnect}</Label>
         </Button>
     </Actions>
 </Dialog>
