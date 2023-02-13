@@ -17,6 +17,7 @@ __pycache__
 /*.img
 *.so
 *.deb
+*.rej
 *.zip
 /rpi-share
 /rpi-root
