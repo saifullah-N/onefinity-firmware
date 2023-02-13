@@ -14,10 +14,13 @@
     let changeHostnameDialog = {
         open: false,
     };
+    
+    let hash = location.hash == "initial-network"
 
     let wifiConnectionDialog = {
         open: false,
         network: {} as WifiNetwork,
+        rebootNow : false
     };
 
     function refreshWifi(){
@@ -52,10 +55,11 @@
         };
     }
 
-    function onNetworkSelected(network: WifiNetwork) {
+    function onNetworkSelected(network: WifiNetwork , rebootNow:boolean) {
         wifiConnectionDialog = {
             open: true,
             network,
+            rebootNow: !rebootNow,
         };
     }
 </script>
@@ -117,7 +121,7 @@
                                 <Item
                                     class="wifi-network"
                                     on:SMUI:action={() =>
-                                        onNetworkSelected(network)}
+                                        onNetworkSelected(network,hash)}
                                 >
                                     <Graphic
                                         class="strength {$networkInfo.wifi
@@ -152,6 +156,12 @@
             </div>
         </div>
     </div>
+    {#if hash}
+    <div style="display:flex; justify-content: space-around; margin-top:2%">
+        <a href="#button-selector" class="prev-btn" >previous </a>
+        <a href="#complete-setup" class="next-btn" >next</a>
+    </div>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -221,6 +231,26 @@
                         }
                     }
                 }
+            }
+
+            .prev-btn {
+                 color:white; 
+                 background-color:#ADD1AD;
+                 font-size:20px; font-family:sans-serif;
+                 padding:15px 40px;
+                 border-radius:8%;
+                 text-decoration: none;
+            }
+
+            .next-btn {
+                color:white;
+                background-color:#ADD1AD; 
+                font-size:20px;
+                font-family:sans-serif;
+                padding:15px 40px;
+                border-radius:8%;
+                text-decoration: none;
+                margin-left: auto;
             }
         }
     }

@@ -16,7 +16,7 @@
 
     export let open = false;
     export let network: WifiNetwork;
-
+    export let rebootNow = false;
     let rebooting = false;
     let password = "";
     let showPassword = false;
@@ -30,7 +30,8 @@
     $: if (open) {
         password = "";
     }
-
+    let label = rebootNow ? connectOrDisconnect +' & Reboot' : connectOrDisconnect
+    
     async function onConfirm() {
         rebooting = true;
 
@@ -40,6 +41,7 @@
                 ssid: network.Name,
                 password,
             },
+            rebootFlag : rebootNow
         });
     }
 </script>
@@ -106,7 +108,7 @@
             disabled={needPassword &&
                 (password.length < 8 || password.length > 128)}
         >
-            <Label>{connectOrDisconnect} & Reboot</Label>
+            <Label>{label}</Label>
         </Button>
     </Actions>
 </Dialog>
