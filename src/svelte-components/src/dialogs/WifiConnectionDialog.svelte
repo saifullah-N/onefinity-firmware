@@ -90,7 +90,7 @@
 
         <p>
             <em>
-                Clicking {connectOrDisconnect} will reboot the controller to apply
+                Clicking {connectOrDisconnect} will  apply
                 the changes.
             </em>
         </p>

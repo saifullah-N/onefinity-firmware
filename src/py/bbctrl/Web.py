@@ -241,8 +241,6 @@ class NetworkHandler(bbctrl.APIHandler):
             cmd = ['config-wifi', '-r']
         else:
             cmd = ['config-wifi']
-            
-        cmd = ['config-wifi', '-r']
 
         if not wifi['enabled']:
             cmd += ['-d']
