@@ -74,6 +74,49 @@ class MessageAckHandler(bbctrl.APIHandler):
         self.get_ctrl().state.ack_message(int(id))
 
 
+class InitialConfigurationHandler(bbctrl.APIHandler):
+
+    def put_ok(self):
+        value = self.json
+        # self.get_log().info(str(value["setup"]))
+        if (value["setup"]):
+            with open("/var/lib/bbctrl/config.json", "r+") as jsonFile:
+                data = json.load(jsonFile)
+                data["initalConfig"] = True
+                jsonFile.seek(0)  # rewind
+                json.dump(data, jsonFile)
+                jsonFile.truncate()
+            subprocess.Popen(['reboot'])
+
+
+class CheckConfigurationHandler(bbctrl.APIHandler):
+    def get(self):
+        try:
+            with open("/var/lib/bbctrl/config.json", "r+") as jsonFile:
+                data = json.load(jsonFile)
+                Config = data["initalConfig"]
+        except:
+            Config = False
+
+        self.write_json({
+            'initalConfig': Config
+        })
+
+
+class ButtonTypeHandler(bbctrl.APIHandler):
+    def put_ok(self):
+        # self.get_ctrl().config.save(self.json)
+        value = self.json
+        self.get_log().info(value["button"])
+        if (value["button"] == "rock"):
+            subprocess.check_call(
+                'sudo mount -o remount,rw /boot && sudo sed -i "s/dtoverlay=gpio-poweroff,gpiopin=21/#rock/"  /boot/config.txt | sudo su', shell=True)
+        elif (value["button"] == 'push'):
+            subprocess.check_call(
+                'sudo mount -o remount,rw /boot && sudo sed -i "s/#rock/dtoverlay=gpio-poweroff,gpiopin=21/"  /boot/config.txt | sudo su', shell=True)
+        # subprocess.check_call('sudo mount -o remount,rw /boot | sudo su', shell=True)
+
+
 class BugReportHandler(bbctrl.RequestHandler):
     def get(self):
         import tarfile, io
@@ -192,6 +235,13 @@ class NetworkHandler(bbctrl.APIHandler):
             raise HTTPError(400, 'Payload is missing wifi config information')
 
         wifi = self.json['wifi']
+        rebootFlag = self.json['rebootFlag']
+
+        if rebootFlag:
+            cmd = ['config-wifi', '-r']
+        else:
+            cmd = ['config-wifi']
+            
         cmd = ['config-wifi', '-r']
 
         if not wifi['enabled']:
@@ -666,6 +716,9 @@ class Web(tornado.web.Application):
             (r'/api/screen-rotation', ScreenRotationHandler),
             (r'/api/time', TimeHandler),
             (r'/api/remote-diagnostics', RemoteDiagnosticsHandler),
+            (r'/api/set-button-type', ButtonTypeHandler),
+            (r'/api/check-initial-config', CheckConfigurationHandler),
+            (r'/api/set-initial-config', InitialConfigurationHandler),
             (r'/(.*)', StaticFileHandler,
              {'path': bbctrl.get_resource('http/'),
               'default_filename': 'index.html'}),
