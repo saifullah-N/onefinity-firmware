@@ -14,7 +14,7 @@ const variant_defaults = {
 };
 
 module.exports = {
-  template: "#default-config",
+  template: "#initial-setup-view-template",
   props: ["config", "state"],
 
   data: function () {

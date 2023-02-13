@@ -1,5 +1,5 @@
 module.exports = {
-  template: "#network-view-template",
+  template: "#initial-network-view-template",
   data: function () {
     return {
       renderd: false,
