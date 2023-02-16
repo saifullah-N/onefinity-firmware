@@ -80,21 +80,19 @@ class InitialConfigurationHandler(bbctrl.APIHandler):
         value = self.json
         # self.get_log().info(str(value["setup"]))
         if (value["setup"]):
-            with open("/var/lib/bbctrl/config.json", "r+") as jsonFile:
-                data = json.load(jsonFile)
-                data["initalConfig"] = True
-                jsonFile.seek(0)  # rewind
-                json.dump(data, jsonFile)
-                jsonFile.truncate()
+            subprocess.check_call('''sudo sed -i 's/"initalConfig": false,/"initalConfig": true,/'  /var/lib/bbctrl/config.json |sudo su''', shell=True)
             subprocess.Popen(['reboot'])
 
 
 class CheckConfigurationHandler(bbctrl.APIHandler):
     def get(self):
         try:
-            with open("/var/lib/bbctrl/config.json", "r+") as jsonFile:
-                data = json.load(jsonFile)
-                Config = data["initalConfig"]
+            output = subprocess.check_output(
+                '''cat config.json | grep -o '"initalConfig":.*,' | cut -d: -f2 | sed 's/[" ,]//g'|grep -o 'false\|true' ''', shell=True).decode()[0:-1]
+            if(output == " true"):
+                Config = True
+            elif (output == " false"):
+                Config = False
         except:
             Config = False
 
