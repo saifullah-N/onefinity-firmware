@@ -90,9 +90,9 @@ class CheckConfigurationHandler(bbctrl.APIHandler):
         try:
             output = subprocess.check_output(
                 '''cat /var/lib/bbctrl/config.json | grep -o '"initalConfig":.*,' | cut -d: -f2 | sed 's/[" ,]//g'|grep -o 'false\|true' ''', shell=True).decode()[0:-1]
-            if(output == " true"):
+            if(output == "true"):
                 Config = True
-            elif (output == " false"):
+            elif (output == "false"):
                 Config = False
         except:
             Config = False
