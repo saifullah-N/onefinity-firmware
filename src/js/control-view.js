@@ -42,7 +42,6 @@ module.exports = {
             tab: "auto",
             ask_home: true,
             showGcodeMessage: false,
-            confirmLoad: "",
             showConfirmMessage:false
         };
     },
@@ -269,29 +268,25 @@ module.exports = {
             this.$dispatch("send", msg);
         },
 
+        confirm_load: function(){
+            this.showConfirmMessage = false;
+            const file_time = this.state.selected_time;
+            const file = this.state.selected;
+            this.last_file = file;
+            this.last_file_time = file_time;
+            this.$broadcast("gcode-load", file);
+            this.$broadcast("gcode-line", this.state.line);
+            this.toolpath_progress = 0;
+            this.load_toolpath(file, file_time);
+        },
+
         load: function() {
             const file_time = this.state.selected_time;
             const file = this.state.selected;
             if (this.last_file == file && this.last_file_time == file_time) {
                 return;
             }
-            this.last_file = file;
-            this.last_file_time = file_time;
             this.showConfirmMessage = true
-            if(this.confirmLoad == "cancel"){
-                this.confirmLoad == "";
-                this.showConfirmMessage = false
-                return;
-            }
-            if(this.confirmLoad == "confirm"){
-                this.confirmLoad == ""
-                this.showConfirmMessage = false
-                this.$broadcast("gcode-load", file);
-                this.$broadcast("gcode-line", this.state.line);
-                this.toolpath_progress = 0;
-                this.load_toolpath(file, file_time);
-                
-            }
         },
 
         load_toolpath: async function(file, file_time) {
