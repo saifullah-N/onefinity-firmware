@@ -26,7 +26,9 @@ module.exports = {
           title: "Success",
           message: "config-set",
         });
-        location.hash = "#control";
+        this.config.status = "disconnected";
+        this.$emit(this.config.status);
+        this.$broadcast(this.config.status);
       } catch (error) {
         console.error(
           "there was a problem in settinng up initial configuration:",

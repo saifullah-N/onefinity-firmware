@@ -400,7 +400,17 @@ module.exports = new Vue({
 
     parse_hash: function () {
       const hash = location.hash.substr(1);
-
+      if(this.initalConfig && !!location.hash){
+        if (
+          hash.includes("complete-setup") ||
+          hash.includes("get-started")    ||
+          hash.includes("z-slider-view")  ||
+          hash.includes("initial-setup")  ||
+          hash.includes("initial-network")||
+          hash.includes("button-selector")
+        )
+          location.pathname == "/"
+      }
       if (location.pathname == "/" && !hash.trim().length) {
         if (!this.initalConfig) {
           location.hash = "get-started";
