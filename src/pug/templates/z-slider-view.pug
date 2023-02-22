@@ -16,4 +16,4 @@ script#z-slider-view-template(type="text/x-template")
 
           div(style='display:flex; justify-content: space-evenly; ')
             button( class="enabled" @click="previous") previous
-            button( :class="z_slider_variant?'enabled':'disabled'", @click="set_z_slider" :disabled="!z_slider_variant") next
+            button( :class="z_slider_variant?'enabled':'disabled'", @click="set_z_slider" :disabled="!!z_slider_variant") next

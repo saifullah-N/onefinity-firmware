@@ -26,7 +26,7 @@ module.exports = {
   data: function () {
     return {
       autoCheckUpgrade: true,
-      z_slider_variant: " ",
+      z_slider_variant: "",
     };
   },
 
@@ -36,7 +36,7 @@ module.exports = {
 
   methods: {
     previous: function () {
-      location.hash = "";
+      location.hash = "button-selector";
     },
     set_z_slider: async function () {
       const z_variant = merge(
