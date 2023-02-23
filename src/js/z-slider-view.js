@@ -45,15 +45,9 @@ module.exports = {
         z_slider_defaults[this.z_slider_variant]
       );
 
-      const config = merge(
-        {},
-        { motors: this.config["motors"] },
-        config_defaults
-      );
-
-      config.motors[3] = z_variant;
+      this.config.motors[3] = z_variant;
       try {
-        await api.put("config/save", config);
+        await api.put("config/save", this.config);
         this.$dispatch("update");
         SvelteComponents.showDialog("Message", {
           title: "Success",
