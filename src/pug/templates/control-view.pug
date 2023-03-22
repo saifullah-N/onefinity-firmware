@@ -291,7 +291,7 @@ script#control-view-template(type="text/x-template")
             h3(slot="header") Load selected File?
             p(slot="body")
             div(slot="footer")
-              button.pure-button(@click="showConfirmMessage = false") Cancel
+              button.pure-button(@click="cancel_loading") Cancel
               button.pure-button.button-success(@click="confirm_load") OK
 
         path-viewer(:toolpath="toolpath", :state="state", :config="config")

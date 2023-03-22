@@ -272,6 +272,9 @@ module.exports = {
             this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
             const file = this.state.selected;
+            if (this.last_file == file && this.last_file_time == file_time) {
+                return;
+            }
             this.last_file = file;
             this.last_file_time = file_time;
             this.$broadcast("gcode-load", file);
@@ -280,12 +283,14 @@ module.exports = {
             this.load_toolpath(file, file_time);
         },
 
+        cancel_loading: function() {
+          showConfirmMessage = false;
+          this.state.selected = this.last_file;   
+        },
+
         load: function() {
-            const file_time = this.state.selected_time;
-            const file = this.state.selected;
-            if (this.last_file == file && this.last_file_time == file_time) {
-                return;
-            }
+            // const file_time = this.state.selected_time;
+            // const file = this.state.selected;
             this.showConfirmMessage = true
         },
 
