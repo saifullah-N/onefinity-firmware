@@ -284,7 +284,7 @@ module.exports = {
         },
 
         cancel_loading: function() {
-          showConfirmMessage = false;
+          this.showConfirmMessage = false;
           this.state.selected = this.last_file;   
         },
 
