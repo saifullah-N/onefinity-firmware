@@ -178,7 +178,7 @@
             executeProbe();
         }
 
-        await Promise.all([
+        await Promise.race([
             ...writables.map((writable) => waitForChange(writable)),
             waitForChange(cancelled),
         ]);
