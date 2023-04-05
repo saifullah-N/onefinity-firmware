@@ -71,7 +71,7 @@
 
     export let open;
     export let probeType: "xyz" | "z";
-    let currentStep: Step = "None";
+    let currentStep: Writable<Step> = writable("None");
     let cutterDiameterString: string = "";
     let cutterDiameterMetric: number;
     let showCancelButton = true;
@@ -140,7 +140,7 @@
             }
         } finally {
             $probingActive = false;
-            currentStep = "None";
+            $currentStep = "None";
 
             if ($probingStarted) {
                 ControllerMethods.stop();
@@ -165,16 +165,16 @@
         nextStep: Step,
         ...writables: Array<Writable<any>>
     ) {
-        currentStep = nextStep;
+        currentStep.set(nextStep);
 
-        if (!steps.includes(currentStep)) {
+        if (!steps.includes($currentStep)) {
             return;
         }
 
         clearFlags();
         updateButtons();
 
-        if (currentStep === "Probe") {
+        if ($currentStep === "Probe") {
             executeProbe();
         }
 
@@ -205,7 +205,7 @@
             allowClose: false,
         };
 
-        switch (currentStep) {
+        switch ($currentStep) {
             case "CheckProbe":
             case "Probe":
                 nextButton.disabled = true;
@@ -307,18 +307,18 @@
     <Content id="probe-dialog-content" style="overflow: visible;">
         <div class="steps">
             <p>
-                <b>Step {steps.indexOf(currentStep) + 1} of {steps.length}</b>
+                <b>Step {steps.indexOf($currentStep) + 1} of {steps.length}</b>
             </p>
             <ul>
                 {#each steps as step}
-                    <li class:active={currentStep === step}>
+                    <li class:active={$currentStep === step}>
                         {stepLabels[step]}
                     </li>
                 {/each}
             </ul>
         </div>
         <div style="width: 100%">
-            {#if currentStep === "CheckProbe"}
+            {#if $currentStep === "CheckProbe"}
                 <p>
                     Attach the probe magnet to the collet, then touch the probe
                     block to the bit.
@@ -329,7 +329,7 @@
                     size="300px"
                     class="probe-icon-svg"
                 />
-            {:else if currentStep === "BitDimensions"}
+            {:else if $currentStep === "BitDimensions"}
                 <TextFieldWithOptions
                     label="Cutter diameter"
                     variant="filled"
@@ -342,7 +342,7 @@
                 />
 
                 <Icon data={BitDiameter} size="150px" class="probe-icon-svg" />
-            {:else if currentStep === "PlaceProbeBlock"}
+            {:else if $currentStep === "PlaceProbeBlock"}
                 <p>
                     {#if probeType === "xyz"}
                         Place the probe block face up, on the lower-left corner
@@ -364,11 +364,11 @@
                     The probing procedure will begin as soon as you click
                     'Next'.
                 </p>
-            {:else if currentStep === "Probe"}
+            {:else if $currentStep === "Probe"}
                 <p>Probing in progress...</p>
 
                 <LinearProgress indeterminate />
-            {:else if currentStep === "Done"}
+            {:else if $currentStep === "Done"}
                 {#if $probingFailed}
                     <h3>Emergency Stop!</h3>
 
