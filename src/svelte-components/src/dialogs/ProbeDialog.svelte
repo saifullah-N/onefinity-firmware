@@ -128,8 +128,8 @@
             }
 
             await stepCompleted("PlaceProbeBlock", userAcknowledged);
-            await stepCompleted("Probe", probingComplete, probingFailed).then(()=>{
-                stepCompleted("Done", userAcknowledged);
+            await stepCompleted("Probe", probingComplete, probingFailed).then(async()=>{
+               await stepCompleted("Done", userAcknowledged);
 
             })
 
