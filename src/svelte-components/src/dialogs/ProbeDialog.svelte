@@ -128,8 +128,10 @@
             }
 
             await stepCompleted("PlaceProbeBlock", userAcknowledged);
-            await stepCompleted("Probe", probingComplete, probingFailed);
-            await stepCompleted("Done", userAcknowledged);
+            await stepCompleted("Probe", probingComplete, probingFailed).then(()=>{
+                stepCompleted("Done", userAcknowledged);
+
+            })
 
             if (probeType === "xyz") {
                 ControllerMethods.gotoZero("xy");
@@ -178,13 +180,17 @@
             executeProbe();
         }
 
-        await Promise.race([
+       let raceResult = await Promise.race([
             ...writables.map((writable) => waitForChange(writable)),
             waitForChange(cancelled),
         ]);
 
         if ($cancelled) {
             throw new Error("cancelled");
+        }
+
+        if(raceResult || currentStep === "Probe"){
+            return raceResult
         }
     }
 
