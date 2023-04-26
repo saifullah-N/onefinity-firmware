@@ -20,7 +20,8 @@ module.exports = {
             axes: "xyzabc",
             history: [],
             speed_override: 1,
-            feed_override: 1,
+            feed_override: 0,
+            showFeedOverride:false,
             jog_incr_amounts: {
                 "METRIC": {
                     fine: 0.1,
@@ -447,11 +448,35 @@ module.exports = {
         },
 
         start: function() {
+            this.showFeedOverride = true;
+        },
+
+        set_feed: function(){
+            this.showFeedOverride = false
+            switch (feed_override) {
+              case 0 :
+              case 20:
+              case 40:
+              case 80:
+              case 100:
+                break;
+
+              default:
+                alert(`Unsupported feed rate: ${feed_override}`);
+                return;
+            }
+            if (this.feed_override != 0) {
+                let filename = this.state.selected.split(".")
+                let file_ext = filename.shift('-1')
+                this.state.selected =  filename.join(".") + this.feed_override + file_ext;
+                this.load();
+            }
             api.put("start");
         },
 
         pause: function() {
             api.put("pause");
+            alert("For Testing everything needed to be started again..")
         },
 
         unpause: function() {
