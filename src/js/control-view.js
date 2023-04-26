@@ -448,7 +448,8 @@ module.exports = {
         },
 
         start: function() {
-            this.showFeedOverride = true;
+            api.put("start");
+            // this.showFeedOverride = true;
         },
 
         set_feed: function(){

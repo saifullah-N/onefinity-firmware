@@ -10,30 +10,30 @@ script#control-view-template(type="text/x-template")
       div(slot="footer")
         label Simulating {{(toolpath_progress || 0) | percent}}
 
-    message(:show.sync="showFeedOverride")
-      h3(slot="header") Select  New Feed Override
-      p(slot="body") Note only few values added as of now 
-      p.reset-variants(slot="body")
-        input#feed0(type="radio", name="feed_override" @click="feed_override = 0")
-        label(for="feed0", title="0%") 0%
+    //- message(:show.sync="showFeedOverride")
+    //-   h3(slot="header") Select  New Feed Override
+    //-   p(slot="body") Note only few values added as of now 
+    //-   p.reset-variants(slot="body")
+    //-     input#feed0(type="radio", name="feed_override" @click="feed_override = 0")
+    //-     label(for="feed0", title="0%") 0%
 
-        input#feed20(type="radio", name="feed_override" @click="feed_override = 20")
-        label(for="feed20", title="20%") 20%
+    //-     input#feed20(type="radio", name="feed_override" @click="feed_override = 20")
+    //-     label(for="feed20", title="20%") 20%
 
-        input#feed40(type="radio", name="feed_override" @click="feed_override = 40")
-        label(for="feed40", title="40%") 40%
+    //-     input#feed40(type="radio", name="feed_override" @click="feed_override = 40")
+    //-     label(for="feed40", title="40%") 40%
 
-        input#feed60(type="radio", name="feed_override" @click="feed_override = 60")
-        label(for="feed60", title="60%") 60%
+    //-     input#feed60(type="radio", name="feed_override" @click="feed_override = 60")
+    //-     label(for="feed60", title="60%") 60%
 
-        input#feed80(type="radio", name="feed_override" @click="feed_override = 80")
-        label(for="feed80", title="80%") 80%
+    //-     input#feed80(type="radio", name="feed_override" @click="feed_override = 80")
+    //-     label(for="feed80", title="80%") 80%
 
-        input#feed100(type="radio", name="feed_override" @click="feed_override = 100")
-        label(for="feed100", title="100%") 100%
-      div(slot="footer")
-        button.pure-button(@click="showFeedOverride = false") Cancel
-        button.pure-button.pure-button-primary(@click="set_feed") next
+    //-     input#feed100(type="radio", name="feed_override" @click="feed_override = 100")
+    //-     label(for="feed100", title="100%") 100%
+    //-   div(slot="footer")
+    //-     button.pure-button(@click="showFeedOverride = false") Cancel
+    //-     button.pure-button.pure-button-primary(@click="set_feed") next
 
     table(style="table-layout: fixed; width: 100%;")
       tr(style="height: fit-content;")
