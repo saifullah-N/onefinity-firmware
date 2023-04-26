@@ -6,6 +6,7 @@ import tornado
 from tornado import gen
 from tornado.web import HTTPError
 from tornado.escape import url_unescape
+import re
 
 
 def safe_remove(path):
@@ -15,6 +16,8 @@ def safe_remove(path):
         pass
 
 
+def update_feed(match, overidepercent):
+    return str((overidepercent /100 * float(match.group(0))) + float(match.group(0)))
 @tornado.web.stream_request_body
 class FileHandler(bbctrl.APIHandler):
     def prepare(self):
@@ -29,13 +32,20 @@ class FileHandler(bbctrl.APIHandler):
                 .replace('/', '_') \
                 .replace('#', '-') \
                 .replace('?', '-')
-
+            self.new_lines = []
             self.uploadFile = tempfile.NamedTemporaryFile("wb")
 
     def data_received(self, data):
         if self.request.method == 'PUT':
-            self.uploadFile.write(data)
-
+            self.uploadFile.write(data)    
+            self.uploadFile.seek(0)
+            os.sync()
+            with open(self.uploadFile.name, 'r') as f:
+                gcode =  f.read()
+            self.get_log().info("gcode read" + gcode)
+            for i in range(20,120,20):
+                self.new_lines.append(re.sub(r"(?<=F)(\d+\.?\d*)",lambda match: update_feed(match,i), gcode))
+                  
     def delete_ok(self, filename):
         if not filename:
             # Delete everything
@@ -54,7 +64,35 @@ class FileHandler(bbctrl.APIHandler):
     def put_ok(self, *args):
         if not os.path.exists(self.get_upload()):
             os.mkdir(self.get_upload())
+            
+        self.get_log('FileHandler').info("new ARR"+str(self.new_lines))
+        percent = 20
 
+        for i in self.new_lines:
+            overrided_file = tempfile.NamedTemporaryFile("w")
+            overrided_file.write(i)
+
+            new_filename = str("".join(self.uploadFilename.split(
+                '.')[0:-1]) + str(percent)+"."+self.uploadFilename.split('.')[-1])
+
+            filename = self.get_upload(
+                new_filename).encode('utf8')
+
+            safe_remove(filename)
+
+            os.link(overrided_file.name, filename)
+            overrided_file.close()
+
+            del (overrided_file)
+
+            self.get_ctrl().preplanner.invalidate(new_filename)
+            self.get_ctrl().state.add_file(new_filename)
+            self.get_log('FileHandler').info(
+                'GCode received: ' + new_filename)
+            del (filename)
+            percent += 20
+
+        self.get_log('FileHandler').info("AFTER 105")
         filename = self.get_upload(self.uploadFilename).encode('utf8')
         safe_remove(filename)
         os.link(self.uploadFile.name, filename)
