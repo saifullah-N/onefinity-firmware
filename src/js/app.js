@@ -42,7 +42,7 @@ function fixup_version_number(version) {
         version = `${version}-${suffix}`;
     }
 
-    return version;
+    return "2.0.0-beta";
 }
 
 function is_object(o) {
