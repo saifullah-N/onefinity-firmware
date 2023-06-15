@@ -413,7 +413,7 @@ module.exports = new Vue({
           "button-selector",
         ].includes(hash)
       ) {
-        location.pathname == "/";
+          location.hash = "control";
       }
       if (location.pathname == "/" && !hash.trim().length) {
         if (!this.initalConfig) {
