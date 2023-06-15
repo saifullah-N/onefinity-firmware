@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-alpha2",
+  "version": "2.0.0-alpha3",
   "settings": {
     "junction-accel": 200000,
     "max-deviation": 0.05,
