@@ -16,84 +16,86 @@ if (document.getElementById("adminViewSvelte") != undefined) {
 }
 
 function parse_version(v) {
-    const pattern = /^(\d+)\.(\d+)\.(\d+)(?:[-.]?(.*))?$/;
-    const [ version, major, minor, patch, pre ] = v.trim().match(pattern) || [];
+  const pattern = /^(\d+)\.(\d+)\.(\d+)(?:[-.]?(.*))?$/;
+  const [version, major, minor, patch, pre] = v.trim().match(pattern) || [];
 
-    return {
-        version,
-        major,
-        minor,
-        patch,
-        pre
-    };
+  return {
+    version,
+    major,
+    minor,
+    patch,
+    pre,
+  };
 }
 
 function fixup_version_number(version) {
-    const v = parse_version(version);
+  const v = parse_version(version);
 
-    version = `${v.major}.${v.minor}.${v.patch}`;
-    if (v.pre) {
-        const [ , prefix, num ] = v.pre.match(/([a-zA-Z])(\d+)/);
+  version = `${v.major}.${v.minor}.${v.patch}`;
+  if (v.pre) {
+    const [, prefix, num] = v.pre.match(/([a-zA-Z])(\d+)/);
 
-        const suffix = prefix === "b"
-            ? `beta.${num}`
-            : v.pre;
+    const suffix = prefix === "b" ? `beta.${num}` : v.pre;
 
-        version = `${version}-${suffix}`;
-    }
+    version = `${version}-${suffix}`;
+  }
 
-    return version;
+  return version;
 }
 
 function is_object(o) {
-    return o !== null && typeof o == "object";
+  return o !== null && typeof o == "object";
 }
 
 function is_array(o) {
-    return Array.isArray(o);
+  return Array.isArray(o);
 }
 
 function update_array(dst, src) {
-    while (dst.length) {
-        dst.pop();
-    }
+  while (dst.length) {
+    dst.pop();
+  }
 
-    for (let i = 0; i < src.length; i++) {
-        Vue.set(dst, i, src[i]);
-    }
+  for (let i = 0; i < src.length; i++) {
+    Vue.set(dst, i, src[i]);
+  }
 }
 
 function hasOwnProperty(obj, key) {
-    return Object.prototype.hasOwnProperty.call(obj, key);
+  return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 function update_object(dst, src, remove) {
-    let props, index, key, value;
+  let props, index, key, value;
 
-    if (remove) {
-        props = Object.getOwnPropertyNames(dst);
+  if (remove) {
+    props = Object.getOwnPropertyNames(dst);
 
-        for (index in props) {
-            key = props[index];
-            if (!hasOwnProperty(src, key)) {
-                Vue.delete(dst, key);
-            }
-        }
-    }
-
-    props = Object.getOwnPropertyNames(src);
     for (index in props) {
-        key = props[index];
-        value = src[key];
-
-        if (is_array(value) && hasOwnProperty(dst, key) && is_array(dst[key])) {
-            update_array(dst[key], value);
-        } else if (is_object(value) && hasOwnProperty(dst, key) && is_object(dst[key])) {
-            update_object(dst[key], value, remove);
-        } else {
-            Vue.set(dst, key, value);
-        }
+      key = props[index];
+      if (!hasOwnProperty(src, key)) {
+        Vue.delete(dst, key);
+      }
     }
+  }
+
+  props = Object.getOwnPropertyNames(src);
+  for (index in props) {
+    key = props[index];
+    value = src[key];
+
+    if (is_array(value) && hasOwnProperty(dst, key) && is_array(dst[key])) {
+      update_array(dst[key], value);
+    } else if (
+      is_object(value) &&
+      hasOwnProperty(dst, key) &&
+      is_object(dst[key])
+    ) {
+      update_object(dst[key], value, remove);
+    } else {
+      Vue.set(dst, key, value);
+    }
+  }
 }
 
 module.exports = new Vue({
@@ -148,8 +150,8 @@ module.exports = new Vue({
     "button-selector-view": require("./button-type-selector-view"),
     "complete-setup-view": require("./complete-setup-view"),
     "initial-network-view": require("./initial-network-view"),
-    "initial-setup-view":require('./initial-setup-view'),
-    "z-slider-view":require('./z-slider-view'),
+    "initial-setup-view": require("./initial-setup-view"),
+    "z-slider-view": require("./z-slider-view"),
     "get-started-view": {
       template: "#get-started-view-template",
     },
@@ -400,16 +402,18 @@ module.exports = new Vue({
 
     parse_hash: function () {
       const hash = location.hash.substr(1);
-      if(this.initalConfig && !!location.hash){
-        if (
-          hash.includes("complete-setup") ||
-          hash.includes("get-started")    ||
-          hash.includes("z-slider-view")  ||
-          hash.includes("initial-setup")  ||
-          hash.includes("initial-network")||
-          hash.includes("button-selector")
-        )
-          location.pathname == "/"
+      if (
+        this.initalConfig &&
+        [
+          "complete-setup",
+          "get-started",
+          "z-slider-view",
+          "initial-setup",
+          "initial-network",
+          "button-selector",
+        ].includes(hash)
+      ) {
+        location.pathname == "/";
       }
       if (location.pathname == "/" && !hash.trim().length) {
         if (!this.initalConfig) {
