@@ -448,16 +448,17 @@ module.exports = new Vue({
       };
       delete settings.tool["tool-type"];
 
-      this.config["selected-tool-settings"][selected_tool] = settings;
-
-      try {
-        await api.put("config/save", this.config);
-        this.modified = false;
-      } catch (error) {
-        console.error("Save failed:", error);
-        alert("Save failed");
-      }
-    },
+            this.config["selected-tool-settings"][selected_tool] = settings;
+            this.display_units = this.config.settings["units"];
+  
+            try {
+                await api.put("config/save", this.config);
+                this.modified = false;
+            } catch (error) {
+                console.error("Save failed:", error);
+                alert("Save failed");
+            }
+        },
 
     close_messages: function (action) {
       if (action == "stop") {
