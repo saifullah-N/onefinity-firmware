@@ -61,7 +61,7 @@ class Planner():
         self.planner = None
         self._position_dirty = False
         self.where = ''
-
+        self.plan_end_time = 0
         ctrl.state.add_listener(self._update)
 
         self.reset(stop = False)
@@ -204,6 +204,7 @@ class Planner():
             plan_time = self.current_plan_time + delta
 
             self.ctrl.state.set('plan_time', round(plan_time))
+            self.log.info('time in state %s',round(plan_time))
 
         elif state != 'HOLDING': self.ctrl.state.set('plan_time', 0)
 
@@ -388,10 +389,14 @@ class Planner():
 
     def next(self):
         try:
-            while self.planner.has_more():
-                cmd = self.planner.next()
-                cmd = self._encode(cmd)
-                if cmd is not None: return cmd
+            if self.plan_end_time > time.time(): return
+            else:
+                while self.planner.has_more():
+                    cmd = self.planner.next()
+                    if cmd is not None and 'times' in cmd:
+                        self.plan_end_time = time.time() + sum(cmd['times'])/1000
+                    cmd = self._encode(cmd)
+                    if cmd is not None: return cmd
 
         except RuntimeError as e:
             # Pass on the planner message

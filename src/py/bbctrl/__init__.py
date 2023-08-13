@@ -181,6 +181,9 @@ def run():
     # Start server
     web = Web(args, ioloop)
 
+    #set default Feed Override value
+    os.environ['FEEDOVERRIDE_OF'] = '1.0'
+
     try:
         ioloop.start()
 
