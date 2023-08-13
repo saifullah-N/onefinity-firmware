@@ -332,10 +332,10 @@ script#control-view-template(type="text/x-template")
         v-model="feed_override", @change="override_feed")
       span.percent {{feed_override | percent 0}}
 
-    .override(title="Spindle speed override.")
-      label Speed
-      input(type="range", min="0", max="2", step="0.01",
-        v-model="speed_override", @change="override_speed")
-      span.percent {{speed_override | percent 0}}
+    //- .override(title="Spindle speed override.")
+    //-   label Speed
+    //-   input(type="range", min="0", max="2", step="0.01",
+    //-     v-model="speed_override", @change="override_speed")
+    //-   span.percent {{speed_override | percent 0}}
 
     
