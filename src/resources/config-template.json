@@ -588,6 +588,10 @@
     "auto-check-upgrade": {
       "type": "bool",
       "default": true
+    },
+    "allow-logs": {
+      "type": "bool",
+      "default": false
     }
   }
 }

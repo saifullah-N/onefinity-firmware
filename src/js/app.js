@@ -326,7 +326,7 @@ module.exports = new Vue({
 
                   // Alternatively, use `process.env.npm_package_version` for a dynamic release version
                   // if your build tool supports it.
-                  release: "1.3.0-alpha",
+                  release: "1.3.0",
                   integrations: [new Sentry.BrowserTracing()],
 
                   // Set tracesSampleRate to 1.0 to capture 100%
