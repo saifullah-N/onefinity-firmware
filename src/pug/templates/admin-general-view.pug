@@ -60,3 +60,13 @@ script#admin-general-view-template(type="text/x-template")
       button.pure-button.pure-button-primary View Log
     a(href="/api/bugreport")
       button.pure-button.pure-button-primary Bug Report
+      
+    p Allow Error Reporting
+      input(type="checkbox", v-model="allowErrorReporting",
+        @change="change_error_reporting")
+      label(for="auto-check-upgrade") &nbsp; Auto Error Reporting
+    p By checking the "Auto Error Reporting" option, you are granting permission for automatic reporting of errors to the Onefinity development team.
+    br
+    |This will include essential data aimed at enhancing the comprehension of errors, improving error resolution, and ultimately enhancing user experience
+  
+

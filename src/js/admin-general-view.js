@@ -37,6 +37,7 @@ module.exports = {
           reset_variant: "",
           z_slider: "",
           z_slider_variant:" ",
+          allowErrorReporting:false,
           config:""
         };
     },
@@ -150,6 +151,10 @@ module.exports = {
 
         change_auto_check_upgrade: function() {
             this.config.admin["auto-check-upgrade"] = this.autoCheckUpgrade;
+            this.$dispatch("config-changed");
+        },
+        change_error_reporting: function() {
+            this.config.admin["allow-logs"] = this.allowErrorReporting;
             this.$dispatch("config-changed");
         }
     }

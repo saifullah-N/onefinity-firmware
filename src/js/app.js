@@ -1,26 +1,5 @@
 "use strict";
 
-Sentry.init({
-  dsn: "https://909e1cdf1a78742e8260faab564fb4b2@o389539.ingest.sentry.io/4505696947273728",
-
-  // Alternatively, use `process.env.npm_package_version` for a dynamic release version
-  // if your build tool supports it.
-  release: "1.3.0-alpha",
-  integrations: [new Sentry.BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-
-  // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-  tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
-
-  // Capture Replay for 10% of all sessions,
-  // plus for 100% of sessions with an error
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
-});
 const api = require("./api");
 const cookie = require("./cookie")("bbctrl-");
 const Sock = require("./sock");
@@ -340,6 +319,33 @@ module.exports = new Vue({
             this.config.ip = wifi.ipAddresses;
             this.config.wifiName = wifi.wifi;
             this.parse_hash();
+            const allowLogs = this.config.admin["allow-logs"];
+            if (typeof allowLogs == "undefined" || allowLogs){
+                Sentry.init({
+                  dsn: "https://909e1cdf1a78742e8260faab564fb4b2@o389539.ingest.sentry.io/4505696947273728",
+
+                  // Alternatively, use `process.env.npm_package_version` for a dynamic release version
+                  // if your build tool supports it.
+                  release: "1.3.0-alpha",
+                  integrations: [new Sentry.BrowserTracing()],
+
+                  // Set tracesSampleRate to 1.0 to capture 100%
+                  // of transactions for performance monitoring.
+                  // We recommend adjusting this value in production
+                  tracesSampleRate: 1.0,
+
+                  // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
+                  tracePropagationTargets: [
+                    "localhost",
+                    /^https:\/\/yourserver\.io\/api/,
+                  ],
+
+                  // Capture Replay for 10% of all sessions,
+                  // plus for 100% of sessions with an error
+                  replaysSessionSampleRate: 0.1,
+                  replaysOnErrorSampleRate: 1.0,
+                });
+            }
 
             if (!this.checkedUpgrade) {
                 this.checkedUpgrade = true;

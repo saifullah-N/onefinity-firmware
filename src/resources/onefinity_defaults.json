@@ -369,7 +369,8 @@
     }
   ],
   "admin": {
-    "auto-check-upgrade": true
+    "auto-check-upgrade": true,
+    "allow-logs":false
   },
   "gcode": {
     "program-start": "(Runs at program start)\nG90 (Absolute distance mode)\nG17 (Select XY plane)\n",
