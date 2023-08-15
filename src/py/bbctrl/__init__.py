@@ -63,6 +63,16 @@ import bbctrl.Cmd as Cmd
 import bbctrl.v4l2 as v4l2
 import bbctrl.Log as log
 import bbctrl.ObjGraph as ObjGraph
+import sentry_sdk
+
+sentry_sdk.init(
+  dsn="https://b7aed97d06f6ee170b78f5ff0f9942f9@o389539.ingest.sentry.io/4505696967000064",
+
+  # Set traces_sample_rate to 1.0 to capture 100%
+  # of transactions for performance monitoring.
+  # We recommend adjusting this value in production.
+  traces_sample_rate=1.0
+)
 
 
 ctrl = None
