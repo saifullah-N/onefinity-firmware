@@ -61,7 +61,7 @@ script#admin-general-view-template(type="text/x-template")
     a(href="/api/bugreport")
       button.pure-button.pure-button-primary Bug Report
       
-    p Allow Error Reporting
+    h2 Allow Error Reporting
       input(type="checkbox", v-model="allowErrorReporting",
         @change="change_error_reporting")
       label(for="auto-check-upgrade") &nbsp; Auto Error Reporting
