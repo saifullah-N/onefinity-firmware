@@ -33,6 +33,7 @@ import signal
 import tornado
 import argparse
 import datetime
+import subprocess
 
 from pkg_resources import Requirement, resource_filename
 
@@ -76,7 +77,13 @@ sentry_sdk.init(
 
 
 ctrl = None
-
+"""
+def sentry_log(e):
+    output = subprocess.check_output(
+                '''cat /var/lib/bbctrl/config.json | grep -o '"allowLogs":.*,' | cut -d: -f2 | sed 's/[" ,]//g'|grep -o 'false\|true' ''', shell=True).decode()[0:-1]
+    if output:
+        sentry_sdk.capture_exception(e)
+"""
 
 def get_resource(path):
     return resource_filename(Requirement.parse('bbctrl'), 'bbctrl/' + path)
