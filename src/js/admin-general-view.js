@@ -44,6 +44,7 @@ module.exports = {
 
     ready: function() {
         this.autoCheckUpgrade = this.config.admin["auto-check-upgrade"];
+        this.allowErrorReporting = this.config.admin["allow-logs"];
     },
 
     methods: {
