@@ -207,14 +207,21 @@ script#control-view-template(type="text/x-template")
                       label {{(progress || 0) | percent}}
                       .bar(:style="'width:' + (progress || 0) * 100 + '%'")
     .override(title="Feed rate override.")
-      button(@click="feed_override >=2 ? feed_override+=0.01 : feed_override")  - 
+      button(style="width :60px; margin-right:12px;" @click="increment_feed")  + 
       div
         label Feed Override
         input(type="range", min="0", max="2", step="0.01",
           v-model="feed_override", @change="override_feed")
         span.percent {{feed_override | percent 0}}
         h3(style="color: #ed8814;") under development
-      button(@click="feed_override <= 0 ? feed_override-=0.01 : feed_override") +        
+      button(style="width :60px; margin-right:12px" @click="decrement_feed") -
+      button(style="margin-left:12px;" @click="feed_override=1")
+        svg(xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='48' height='48' viewbox='0 0 172 172' style=' fill:#26e07f;')
+          g(fill='none' fill-rule='nonzero' stroke='none' stroke-width='1' stroke-linecap='butt' stroke-linejoin='miter' stroke-miterlimit='10' stroke-dasharray='' stroke-dashoffset='0' font-family='none' font-weight='none' font-size='none' text-anchor='none' style='mix-blend-mode: normal')
+          path(d='M0,172v-172h172v172z' fill='none')
+          g(fill='#1fb141')
+          path(d='M21.5,21.5v129h64.5v-32.25v-64.5v-32.25zM86,53.75c0,17.7805 14.4695,32.25 32.25,32.25c17.7805,0 32.25,-14.4695 32.25,-32.25c0,-17.7805 -14.4695,-32.25 -32.25,-32.25c-17.7805,0 -32.25,14.4695 -32.25,32.25zM118.25,86c-17.7805,0 -32.25,14.4695 -32.25,32.25c0,17.7805 14.4695,32.25 32.25,32.25c17.7805,0 32.25,-14.4695 32.25,-32.25c0,-17.7805 -14.4695,-32.25 -32.25,-32.25z')
+       
     .tabs
      
       input#tab1(type="radio", name="tabs",checked="" @click="tab = 'auto'")
