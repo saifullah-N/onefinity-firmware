@@ -64,7 +64,6 @@
 </script>
 
 <WifiConnectionDialog {...wifiConnectionDialog} />
-<ChangeHostnameDialog {...changeHostnameDialog} />
 
 <div class="admin-network-view">
     <div style="display:flex; flex-direction:row; justify-content:space-between" >
