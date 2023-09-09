@@ -286,6 +286,13 @@ script#control-view-template(type="text/x-template")
               "finishes.")
             div(:style="'width:' + (toolpath_progress || 0) * 100 + '%'")
               label Simulating {{(toolpath_progress || 0) | percent}}
+          message(:show.sync="showConfirmMessage")
+            h3(slot="header") Load selected File?
+            p(slot="body")
+            div(slot="footer")
+              button.pure-button(@click="cancel_loading") Cancel
+              button.pure-button.button-success(@click="confirm_load") OK
+
 
         path-viewer(:toolpath="toolpath", :state="state", :config="config")
         gcode-viewer

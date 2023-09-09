@@ -41,7 +41,8 @@ module.exports = {
             deleteGCode: false,
             tab: "auto",
             ask_home: true,
-            showGcodeMessage: false
+            showGcodeMessage: false,
+            showConfirmMessage:false
         };
     },
 
@@ -269,7 +270,8 @@ module.exports = {
             this.$dispatch("send", msg);
         },
 
-        load: function() {
+        confirm_load: function(){
+            this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
             const file = this.state.selected;
             if (this.last_file == file && this.last_file_time == file_time) {
@@ -285,6 +287,14 @@ module.exports = {
             this.load_toolpath(file, file_time);
         },
 
+        cancel_loading: function() {
+          this.showConfirmMessage = false;
+          this.state.selected = this.last_file;   
+        },
+
+        load: function() {
+            this.showConfirmMessage = true
+        },
         load_toolpath: async function(file, file_time) {
             this.toolpath = {};
 
