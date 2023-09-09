@@ -111,7 +111,7 @@ class Comm(object):
     def _poll_cb(self, now = True):
         # Checks periodically for new commands from planner via comm_next()
         if now: self.flush()
-        self.ctrl.ioloop.call_later(1, self._poll_cb)
+        self.ctrl.ioloop.call_later(0.1, self._poll_cb)
 
 
     def _write(self, write_cb):

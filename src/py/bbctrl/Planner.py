@@ -315,6 +315,7 @@ class Planner():
         self.move_time = 0
         self.plan_time = 0
         self.current_plan_time = 0
+        self.plan_end_time = 0
 
 
     def close(self):
@@ -388,10 +389,24 @@ class Planner():
 
     def next(self):
         try:
-            while self.planner.has_more():
-                cmd = self.planner.next()
-                cmd = self._encode(cmd)
-                if cmd is not None: return cmd
+            self.log.info('Current time: %s', time.time())
+            if self.where != '<mdi>' and self.plan_end_time >= time.time():
+                self.log.info('Before return: %s', self.plan_end_time)
+                return
+
+            else:
+                while self.planner.has_more():
+                    cmd = self.planner.next()
+                    if cmd is not None and 'times' in cmd:
+                        if (sum(cmd['times'])/1000 > 0.09):
+                            self.plan_end_time = time.time() + \
+                                sum(cmd['times'])/1050
+                            self.log.info('Plan time: %s', self.plan_end_time)
+                            self.log.info('Time array sum: %s',
+                                          sum(cmd['times'])/1000)
+                    cmd = self._encode(cmd)
+                    if cmd is not None:
+                        return cmd
 
         except RuntimeError as e:
             # Pass on the planner message
