@@ -398,6 +398,23 @@ module.exports = new Vue({
         parse_hash: function() {
             const hash = location.hash.substr(1);
             if (
+              !this.initalConfig &&
+              ([
+                "control",
+                "admin-network",
+                "settings",
+                "tool",
+                "io",
+                "admin-general",
+                "cheat-sheet",
+                "help",
+              ].includes(hash) ||
+                hash.split(":").includes("motor"))
+            ) {
+              location.hash = "get-started";
+              return;
+            }
+            if (
                 this.initalConfig &&
                 [
                 "complete-setup",
