@@ -482,6 +482,18 @@ module.exports = {
             api.put("step");
         },
 
+        increment_feed(){
+             if (this.feed_override < 2) {
+                this.feed_override += 0.01;
+                this.override_feed()}
+        },
+
+        decrement_feed(){
+                if (this.feed_override > 0) {
+                    this.feed_override -= 0.01;
+                    this.override_feed();}
+        },
+        
         override_feed: function() {
             api.put(`override/feed/${this.feed_override}`);
         },
