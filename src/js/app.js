@@ -323,6 +323,8 @@ module.exports = new Vue({
         update: async function() {
             const config = await api.get("config/load");
             const wifi = await api.get("wifi");
+            const initalConfig = await api.get("check-initial-config");
+            this.initalConfig = initalConfig.initalConfig ?? false;
             update_object(this.config, config, true);
             this.config.full_version = fixup_version_number(this.config.full_version);
             this.config.ip = wifi.ipAddresses;
