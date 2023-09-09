@@ -1,0 +1,41 @@
+"use strict";
+
+const api = require("./api");
+const utils = require("./utils");
+const merge = require("lodash.merge");
+
+module.exports = {
+  template: "#button-type-selector-view-template",
+  props: ["config", "state"],
+
+  data: function () {
+    return {
+      confirmReset: false,
+      autoCheckUpgrade: true,
+      button_type: "",
+    };
+  },
+
+  methods: {
+    set_btn_type: async function () {
+      const data = { button: this.button_type };
+      try {
+        await api.put("set-button-type", data); //JSON.stringify(data)
+        this.confirmReset = false;
+        this.$dispatch("update");
+        SvelteComponents.showDialog("Message", {
+          title: "Success",
+          message: "button type set",
+        });
+        location.hash = "initial-network";
+      } catch (error) {
+        console.error("button settings failed:", error);
+        alert("OOPS! an error has occured");
+      }
+    },
+
+    previous: function () {
+      location.hash = "z-slider";
+    },
+  },
+};

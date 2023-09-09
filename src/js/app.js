@@ -101,6 +101,7 @@ module.exports = new Vue({
 
     data: function() {
         return {
+      initalConfig: false,
           status: "connecting",
           currentView: "loading",
           display_units: localStorage.getItem("display_units") || "METRIC",
@@ -144,6 +145,14 @@ module.exports = new Vue({
         "admin-general-view": require("./admin-general-view"),
         "admin-network-view": require("./admin-network-view"),
         "help-view": require("./help-view"),
+        "button-selector-view": require("./button-type-selector-view"),
+        "complete-setup-view": require("./complete-setup-view"),
+        "initial-network-view": require("./initial-network-view"),
+        "initial-setup-view": require("./initial-setup-view"),
+        "z-slider-view": require("./z-slider-view"),
+        "get-started-view": {
+            template: "#get-started-view-template",
+        },
         "cheat-sheet-view": {
             template: "#cheat-sheet-view-template",
             data: function() {
@@ -386,12 +395,28 @@ module.exports = new Vue({
 
         parse_hash: function() {
             const hash = location.hash.substr(1);
-
-            if (!hash.trim().length) {
+            if (
+                this.initalConfig &&
+                [
+                "complete-setup",
+                "get-started",
+                "z-slider-view",
+                "initial-setup",
+                "initial-network",
+                "button-selector",
+                ].includes(hash)
+                ) {
+                     location.hash = "control";
+                    }
+            if (location.pathname == "/" && !hash.trim().length) {
+                if (!this.initalConfig) {
+                location.hash = "get-started";
+                return;
+                } else {
                 location.hash = "control";
                 return;
             }
-
+            }
             const parts = hash.split(":");
 
             if (parts.length == 2) {
