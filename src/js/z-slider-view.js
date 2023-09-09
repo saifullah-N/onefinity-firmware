@@ -36,7 +36,7 @@ module.exports = {
 
   methods: {
     previous: function () {
-      location.hash = "button-selector";
+      location.hash = "initial-setup";
     },
     set_z_slider: async function () {
       const z_variant = merge(
