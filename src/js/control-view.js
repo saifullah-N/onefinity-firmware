@@ -484,7 +484,8 @@ module.exports = {
 
         increment_feed(){
              if (this.feed_override < 2) { 
-                this.feed_override = Number((this.feed_override += 0.1)
+                this.feed_override = Number(
+                  (this.feed_override += 0.1)
                 ).toFixed(2);
                 this.override_feed()}
         },
