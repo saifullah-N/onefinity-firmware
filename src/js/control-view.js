@@ -483,16 +483,24 @@ module.exports = {
         },
 
         increment_feed(){
-             if (this.feed_override < 2) {
-                this.feed_override += 0.1;
+             if (this.feed_override < 2) { 
+                this.feed_override = Number((this.feed_override += 0.1)
+                ).toFixed(2);
                 this.override_feed()}
         },
 
         decrement_feed(){
                 if (this.feed_override > 0.1) {
-                  this.feed_override -= 0.1;
+                this.feed_override = Number(
+                  (this.feed_override -= 0.1)
+                ).toFixed(2);
                   this.override_feed();
                 }
+        },
+
+        reset_feed(){
+                this.feed_override = 1;
+                this.override_feed()
         },
         
         override_feed: function() {
