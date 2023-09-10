@@ -210,7 +210,7 @@ script#control-view-template(type="text/x-template")
       button(style="width :60px; margin-right:12px;" @click="decrement_feed")  - 
       div
         label Feed Override
-        input(type="range", min="0", max="2", step="0.01",
+        input(type="range", min="0.1", max="2", step="0.1",
           v-model="feed_override", @change="override_feed")
         span.percent {{feed_override | percent 0}}
         h3(style="color: #ed8814;") under development

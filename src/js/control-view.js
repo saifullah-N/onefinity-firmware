@@ -484,13 +484,13 @@ module.exports = {
 
         increment_feed(){
              if (this.feed_override < 2) {
-                this.feed_override += 0.01;
+                this.feed_override += 0.1;
                 this.override_feed()}
         },
 
         decrement_feed(){
-                if (this.feed_override > 0) {
-                    this.feed_override -= 0.01;
+                if (this.feed_override > 0.1) {
+                    this.feed_override -= 0.1;
                     this.override_feed();}
         },
         
