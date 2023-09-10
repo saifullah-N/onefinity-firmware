@@ -490,8 +490,9 @@ module.exports = {
 
         decrement_feed(){
                 if (this.feed_override > 0.1) {
-                    this.feed_override -= 0.1;
-                    this.override_feed();}
+                  this.feed_override -= 0.1;
+                  this.override_feed();
+                }
         },
         
         override_feed: function() {
