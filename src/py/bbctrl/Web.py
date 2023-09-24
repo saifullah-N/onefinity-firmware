@@ -392,7 +392,7 @@ class PositionHandler(bbctrl.APIHandler):
 
 
 class OverrideFeedHandler(bbctrl.APIHandler):
-    def put_ok(self, value): self.get_ctrl().mach.override_feed(float(value))
+    def put_ok(self, value): os.environ['FEEDOVERRIDE_OF'] = value
 
 
 class OverrideSpeedHandler(bbctrl.APIHandler):

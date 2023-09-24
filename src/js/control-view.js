@@ -41,7 +41,8 @@ module.exports = {
             deleteGCode: false,
             tab: "auto",
             ask_home: true,
-            showGcodeMessage: false
+            showGcodeMessage: false,
+            showConfirmMessage:false
         };
     },
 
@@ -269,7 +270,8 @@ module.exports = {
             this.$dispatch("send", msg);
         },
 
-        load: function() {
+        confirm_load: function(){
+            this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
             const file = this.state.selected;
             if (this.last_file == file && this.last_file_time == file_time) {
@@ -285,6 +287,14 @@ module.exports = {
             this.load_toolpath(file, file_time);
         },
 
+        cancel_loading: function() {
+          this.showConfirmMessage = false;
+          this.state.selected = this.last_file;   
+        },
+
+        load: function() {
+            this.showConfirmMessage = true
+        },
         load_toolpath: async function(file, file_time) {
             this.toolpath = {};
 
@@ -472,6 +482,28 @@ module.exports = {
             api.put("step");
         },
 
+        increment_feed(){
+             if (this.feed_override < 2) { 
+                this.feed_override = Number(
+                  parseFloat(this.feed_override) + 0.1
+                ).toFixed(2);
+                this.override_feed()}
+        },
+
+        decrement_feed(){
+                if (this.feed_override > 0.1) {
+                this.feed_override = Number(
+                  parseFloat(this.feed_override) - 0.1
+                ).toFixed(2);
+                  this.override_feed();
+                }
+        },
+
+        reset_feed(){
+                this.feed_override = 1;
+                this.override_feed()
+        },
+        
         override_feed: function() {
             api.put(`override/feed/${this.feed_override}`);
         },
