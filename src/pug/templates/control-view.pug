@@ -214,7 +214,7 @@ script#control-view-template(type="text/x-template")
         input(type="range", min="0.5", max="2", step="0.1",
           v-model="feed_override", @change="override_feed")
         span.percent {{feed_override | percent 0}}
-        h3(style="color: #ed8814;") under development
+        h3(style="color: #000; margin-left:35%;") Limit -50% to +100%
       button(style="width :60px; margin-right:12px" @click="increment_feed")
         .fa.fa-arrow-right 
       button(style="width :60px; margin-left:12px;" @click="feed_override=1")
