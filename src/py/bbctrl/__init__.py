@@ -66,7 +66,7 @@ import bbctrl.ObjGraph as ObjGraph
 
 
 ctrl = None
-os.environ['FEEDOVERRIDE_OF'] = 1
+os.environ['FEEDOVERRIDE_OF'] = "1"
 
 def get_resource(path):
     return resource_filename(Requirement.parse('bbctrl'), 'bbctrl/' + path)
