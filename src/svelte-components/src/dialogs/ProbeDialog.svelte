@@ -105,14 +105,10 @@
             $probingActive = true;
             assertValidProbeType();
 
-            $probingFailed = false;
-
-            const enableSafety = $Config.settings["probing-prompts"];
-
             steps = [
-                enableSafety ? "CheckProbe" : undefined,
+                "CheckProbe",
                 probeType === "xyz" ? "BitDimensions" : undefined,
-                enableSafety ? "PlaceProbeBlock" : undefined,
+                "PlaceProbeBlock",
                 "Probe",
                 "Done",
             ].filter<Step>(isStep);
@@ -192,6 +188,7 @@
         $cancelled = false;
         $probeContacted = false;
         $probingStarted = false;
+        $probingFailed = false;
         $probingComplete = false;
         $userAcknowledged = false;
     }
