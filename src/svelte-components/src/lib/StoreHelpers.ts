@@ -1,3 +1,5 @@
+import { get, type Writable } from "svelte/store";
+
 export function listenForChange<T>(writable: Writable<T>, cb: (value: T) => void) {
     const priorValue = get(writable);
 
