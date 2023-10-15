@@ -227,8 +227,8 @@ module.exports = {
     },
 
     ready: function() {
-        this.load();
-
+        // this.load();
+        console.log(this.state.selected_time, this.toolpath);
         setInterval(() => {
             this.current_time = new Date().toLocaleTimeString();
         }, 1000);
