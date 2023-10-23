@@ -227,7 +227,7 @@ module.exports = {
     },
 
     ready: function() {
-        // this.load();
+        this.load();
         console.log(this.state.selected_time, this.toolpath);
         setInterval(() => {
             this.current_time = new Date().toLocaleTimeString();
@@ -273,6 +273,9 @@ module.exports = {
         confirm_load: function(){
             this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
+            if(file_time <= 180000000){
+                this.reset_feed()
+            } 
             const file = this.state.selected;
             if (this.last_file == file && this.last_file_time == file_time) {
                 return;
