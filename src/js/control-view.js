@@ -292,7 +292,7 @@ module.exports = {
 
         cancel_loading: function() {
           this.showConfirmMessage = false;
-          this.state.selected = this.last_file;   
+          this.state.selected = this.last_file;
         },
 
         load: function() {
@@ -330,6 +330,7 @@ module.exports = {
         },
 
         submit_mdi: function() {
+            this.reset_feed();
             this.send(this.mdi);
 
             if (!this.history.length || this.history[0] != this.mdi) {
@@ -401,7 +402,7 @@ module.exports = {
 
         home: function(axis) {
             this.ask_home = false;
-
+            this.reset_feed();
             if (typeof axis == "undefined") {
                 api.put("home");
             } else if (this[axis].homingMode != "manual") {
