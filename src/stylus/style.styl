@@ -506,6 +506,24 @@ span.unit
                 repeating-linear-gradient(90deg, #777, #777 1px, transparent 1px, transparent 25px) repeat 0 200px
     background-size 122px 25px
 
+    input[type="range"]::before
+      content "25%"
+      position absolute
+      top 40px
+      left 0
+
+    input[type="range"]::before:nth-of-type(2)
+      content "50%"
+      left 25px
+
+    input[type="range"]::before:nth-of-type(3)
+      content "75%"
+      left 50px
+    
+    input[type="range"]::before:nth-of-type(3)
+      content "100%"
+      left 75px
+
     input[type="range"]:focus
       outline none
       &::-webkit-slider-thumb
