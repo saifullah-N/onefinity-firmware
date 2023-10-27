@@ -488,7 +488,7 @@ module.exports = {
         },
 
         increment_feed(){
-             if (this.feed_override < 2) { 
+             if (this.feed_override < 1) { 
                 this.feed_override = Number(
                   parseFloat(this.feed_override) + 0.1
                 ).toFixed(2);
@@ -496,7 +496,7 @@ module.exports = {
         },
 
         decrement_feed(){
-                if (this.feed_override > 0.1) {
+                if (this.feed_override > -0.1) {
                 this.feed_override = Number(
                   parseFloat(this.feed_override) - 0.1
                 ).toFixed(2);
