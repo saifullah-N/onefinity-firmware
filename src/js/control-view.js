@@ -20,7 +20,7 @@ module.exports = {
             axes: "xyzabc",
             history: [],
             speed_override: 1,
-            feed_override: 1,
+            feed_override: 0,
             jog_incr_amounts: {
                 "METRIC": {
                     fine: 0.1,
