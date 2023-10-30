@@ -486,7 +486,11 @@ span.unit
     .text-container
       width 95%
 
-    .percent-text
+    .positive-percent-text
+      font-size 45%
+      padding-left 2%
+    
+    .negative-percent-text
       font-size 45%
       padding-left 2%
 
@@ -497,12 +501,13 @@ span.unit
 
     .percent
       display inline-block
-      width 3em
-      margin-left 3%
+      width 4em
+      margin-left 1%
 
     input[type='range']
       -webkit-appearance none
       cursor pointer
+      margin-left 10px
       width 530px
       height 30px
       background -webkit-repeating-linear-gradient(90deg, #777, #777 2px, transparent 2px, transparent 20px) repeat 2px 50%
