@@ -511,6 +511,61 @@ span.unit
     display flex
     align-items center
     justify-content space-between
+
+    input[type='range']
+      -webkit-appearance none
+      cursor pointer
+      margin-left 3px
+      width 656px
+      height 30px
+      background -webkit-repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
+      background -moz-repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
+      background repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
+      background-size 32px 25px
+      font-size 16px
+
+    input[type='range']::-webkit-slider-runnable-track
+      box-sizing border-box
+      width 200px
+      height 5px
+      border-radius 2px
+      background #000
+    
+    input[type="range"]:focus
+      outline none
+      &::-webkit-slider-thumb
+        outline 3px solid #FF5733
+        outline-offset 0.125rem
+      &::-moz-range-thumb
+        outline 3px solid #FF5733
+        outline-offset 0.125rem
+
+    input[type="range"]::-webkit-slider-runnable-track
+      background-color #000
+      border-radius 0.5rem
+      height 0.5rem
+
+    input[type="range"]::-webkit-slider-thumb
+      -webkit-appearance none
+      appearance none
+      margin-top -16px
+      background-color #FF5733
+      border-radius 0.5rem
+      height 2.5rem
+      width 1rem
+
+    input[type="range"]::-moz-range-track
+      background-color #000
+      border-radius 0.5rem
+      height 0.5rem
+
+    input[type="range"]::-moz-range-thumb
+      background-color #FF5733
+      border none
+      border-radius 0.5rem
+      height 2.5rem
+      width 1rem
+
   .range-container
     width 68%
     height 100%
