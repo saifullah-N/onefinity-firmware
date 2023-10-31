@@ -206,7 +206,7 @@ script#control-view-template(type="text/x-template")
                     td.progress
                       label {{(progress || 0) | percent}}
                       .bar(:style="'width:' + (progress || 0) * 100 + '%'")
-    div.set-container
+    .set-container
       .override(title="Feed rate override.")
         div.left-button-container
           button(style="width :60px; height :60px; margin-right:12px;" @click="decrement_feed")
