@@ -499,7 +499,14 @@ span.unit
     width 30%
     height 100%
 
-  .text-container-range-bars
+  .text-container-range-bars-left
+    width 98%
+    height 100%
+    display flex
+    align-items self-end
+    justify-content space-between
+  
+  .text-container-range-bars-right
     width 100%
     height 100%
     display flex
@@ -515,13 +522,14 @@ span.unit
 
     input[type='range']
       -webkit-appearance none
+      cursor pointer
+      margin-left 3px
+      width 616px
+      height 30px
       background -webkit-repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
       background -moz-repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
-      background repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 5px 50%
-      background-size 32px 25px
-      cursor pointer
-      width 656px
-      height 30px
+      background repeating-linear-gradient(90deg, #777, #777 2px, transparent 3px, transparent 32px) repeat 6px 50%
+      background-size 30px 25px
       font-size 16px
 
     input[type='range']::-webkit-slider-runnable-track
@@ -590,7 +598,7 @@ span.unit
       height 100%
       flex-direction column
       justify-content center
-      align-items flex-end
+      align-items center
 
     .percent-text
       font-size 53%
