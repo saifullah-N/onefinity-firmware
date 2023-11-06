@@ -226,7 +226,7 @@ script#control-view-template(type="text/x-template")
               
             div.text-container
               input(type="range", min="0", max="2", step="0.1"
-                v-model="feed_override", @change="override_feed")
+                v-model="feed_override", @change="override_feed",:disabled ="this.state.selected_time<180000000")
           span.percent {{feed_override - 1 | percent 0}}
           h3(style="color: #000; margin-left:35%;") Limit -100% to +100%
           h3(style="color: #000;padding: 10px;") G-Code Feed
