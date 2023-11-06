@@ -274,8 +274,8 @@ module.exports = {
             this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
             console.log('filetime in confirm load',{file_time})
-            console.log("this.toolpath.time: ",this.toolpath.time)
-            if(parseFloat(this.toolpath.time)/60 <= 3){
+            console.log("this.toolpath.time: ",parseFloat(this.toolpath.time)/60)
+            if(parseFloat(this.toolpath.time)/60 <= 10){
                 this.reset_feed()
             } 
             const file = this.state.selected;
