@@ -209,7 +209,7 @@ script#control-view-template(type="text/x-template")
     div.set-container
       div.override(title="Feed rate override.")
         div.left-button-container
-          button(style="width :60px; height :60px; margin-right:12px;" @click="decrement_feed")
+          button(style="width :60px; height :60px; margin-right:12px;" @click="decrement_feed":disabled ="parseFloat(this.toolpath.time)/60 <= 10")
             .fa.fa-arrow-left 
         div.range-container
           label Feed Override
