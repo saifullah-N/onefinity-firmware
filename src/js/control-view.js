@@ -274,6 +274,7 @@ module.exports = {
             this.showConfirmMessage = false;
             const file_time = this.state.selected_time;
             console.log('filetime in confirm load',{file_time})
+            console.log("this.toolpath.time: ",this.toolpath.time)
             if(file_time <= 180000000){
                 this.reset_feed()
             } 
