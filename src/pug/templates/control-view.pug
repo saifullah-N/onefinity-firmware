@@ -208,7 +208,7 @@ script#control-view-template(type="text/x-template")
                       .bar(:style="'width:' + (progress || 0) * 100 + '%'")
     div.set-container
       div.override(title="Feed rate override.")
-        div.left-button-container(:class= (this.toolpath.time? ((parseFloat(this.toolpath.time)/60 <= 10) ? '.bar-inactive' : '') :''))
+        div.left-button-container(:class= (this.toolpath && this.toolpath.time? ((parseFloat(this.toolpath.time)/60 <= 10) ? '.bar-inactive' : '') :''))
           button(style="width :60px; height :60px; margin-right:12px;" @click="decrement_feed", :disabled ="parseFloat(this.toolpath.time)/60 <= 10")
             .fa.fa-arrow-left 
         div.range-container
