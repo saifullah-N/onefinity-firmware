@@ -213,7 +213,7 @@ script#control-view-template(type="text/x-template")
             .fa.fa-arrow-left 
         div.range-container
           label Feed Override
-          div.range-handler
+          div.range-handler(:class="state.xx == \"RUNNING\" && parseFloat(toolpath.time)/60 <= 3? 'bar-inactive': 'bar-active'")
             div.text-container-range-bars
               each val in [-100, -90, -80, -70, -60, -50, -40, -30, -20, -10]
                 div.range-options-left
