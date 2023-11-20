@@ -15,11 +15,6 @@
         },
         {
             "drive-current": 2.6,
-            "travel-per-rev": 16,
-            "max-soft-limit": 1220
-        },
-        {
-            "drive-current": 2.6,
             "microsteps": 8,
             "travel-per-rev": 10,
             "min-soft-limit": -160
