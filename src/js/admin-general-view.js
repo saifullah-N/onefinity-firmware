@@ -104,11 +104,12 @@ module.exports = {
                     this.confirmReset = false;
                     this.$dispatch("update");
                     this.config= config
-                    if (reset_variant=="foreman_pro"){
-                        this.z_slider_variant="foreman_pro";
-                        return this.set_z_slider();
-                    }
                     this.z_slider = true;
+                    if (reset_variant=="foreman_pro"){
+                        this.z_slider = false;
+                        this.z_slider_variant="foreman_pro";
+                        this.set_z_slider();
+                    }
                 } catch (error) {
                     console.error("Restore failed:", error);
                     alert("Restore failed");
