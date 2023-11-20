@@ -25,6 +25,9 @@ const z_slider_defaults = {
     "min-soft-limit": -160,
     "max-velocity": 7,
   },
+  "foreman_pro":{
+
+  }
 }; 
 
 module.exports = {
@@ -101,6 +104,10 @@ module.exports = {
                     this.confirmReset = false;
                     this.$dispatch("update");
                     this.config= config
+                    if (reset_variant=="foreman_pro"){
+                        this.z_slider_variant="foreman_pro";
+                        return this.set_z_slider();
+                    }
                     this.z_slider = true;
                 } catch (error) {
                     console.error("Restore failed:", error);
