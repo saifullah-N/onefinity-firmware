@@ -105,7 +105,7 @@ module.exports = {
                     this.$dispatch("update");
                     this.config= config
                     this.z_slider = true;
-                    if (reset_variant=="foreman_pro"){
+                    if (this.reset_variant=="foreman_pro"){
                         this.z_slider = false;
                         this.z_slider_variant="foreman_pro";
                         this.set_z_slider();
