@@ -16,7 +16,7 @@
         {
             "drive-current": 2.8,
             "travel-per-rev": 16,
-            "max-soft-limit": 1220
+            "max-soft-limit": 1230
         },
         {
             "drive-current": 2.6,
