@@ -4,14 +4,14 @@
             "drive-current": 2.6,
             "microsteps": 8,
             "travel-per-rev": 16,
-            "max-soft-limit": 1220,
+            "max-soft-limit": 1230,
             "stall-microstep": 16,
             "search-velocity": 1.35
         },
         {
             "drive-current": 2.6,
             "travel-per-rev": 16,
-            "max-soft-limit": 1220
+            "max-soft-limit": 1230
         },
         {
             "drive-current": 2.8,
