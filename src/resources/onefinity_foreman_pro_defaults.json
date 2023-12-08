@@ -2,16 +2,14 @@
     "motors": [
         {
             "max-soft-limit": 1220,
-            "travel-per-rev": 16,
-            "zero-backoff": 1.501
+            "travel-per-rev": 16
         },
         {
             "max-soft-limit": 1225,
             "travel-per-rev": 16
         },
         {
-            "max-soft-limit": 816,
-            "drive-current": 2.8,
+            "max-soft-limit": 1225,
             "travel-per-rev": 16
         }
     ]
