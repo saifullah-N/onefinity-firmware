@@ -76,31 +76,36 @@ module.exports = {
         },
       });
     },
-    uploadGCode: function (filename,file) {
-      const xhr = new XMLHttpRequest();
+    uploadGCode: function (filename, file) {
+      try {
+        const xhr = new XMLHttpRequest();
 
-      xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          console.log("File uploaded successfully");
-        } else {
-          console.error("File upload failed:", xhr.statusText);
-        }
-      };
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            console.log("File uploaded successfully");
+          } else {
+            console.error("File upload failed:", xhr.statusText);
+          }
+        };
 
-      xhr.onerror = function () {
-        console.error("Network error during file upload");
-      };
+        xhr.onerror = function () {
+          console.error("Network error during file upload");
+        };
 
-      xhr.upload.onprogress = function (event) {
-        if (event.lengthComputable) {
-          const progress = (event.loaded / event.total) * 100;
-          console.log("Upload progress:", progress);
-        }
-      };
+        xhr.upload.onprogress = function (event) {
+          if (event.lengthComputable) {
+            const progress = (event.loaded / event.total) * 100;
+            console.log("Upload progress:", progress);
+          }
+        };
 
-      xhr.open("PUT", `/api/file/${encodeURIComponent(filename)}`, true);
-      xhr.send(file);
+        xhr.open("PUT", `/api/file/${encodeURIComponent(filename)}`, true);
+        xhr.send(file);
 
+        // this.load();
+      } catch (error) {
+        console.error("Error Saving the gcode: ", error);
+      }
     },
     saveMacros: async function () {
       var macrosName = document.getElementById(
@@ -112,12 +117,13 @@ module.exports = {
 
       if (this.state.selected == "default") {
         var file = this.newGcode[this.tab - 1];
-        this.uploadGCode(macrosName,file);
+        this.uploadGCode(macrosName, file);
       }
 
       this.config.macros[this.tab - 1].name = macrosName;
       this.config.macros[this.tab - 1].color = macrosColor;
-      this.config.macros[this.tab - 1].gcode_file_name = this.state.selected == 'default' ? macrosName : this.state.selected;
+      this.config.macros[this.tab - 1].gcode_file_name =
+        this.state.selected == "default" ? macrosName : this.state.selected;
       this.config.macros[this.tab - 1].gcode_file_time =
         this.state.selected_time;
       this.cancelMacros(this.tab - 1);
