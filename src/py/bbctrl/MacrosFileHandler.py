@@ -39,7 +39,7 @@ class MacroFileHandler(bbctrl.APIHandler):
     def delete_ok(self, filename):
         if not filename:
             # Delete everything
-            for path in glob.glob(self.get_macro_upload('*')):
+            for path in glob.glob(self.get_macros_upload('*')):
                 safe_remove(path)
             self.get_ctrl().preplanner.delete_all_plans()
             self.get_ctrl().state.clear_files()
@@ -47,15 +47,15 @@ class MacroFileHandler(bbctrl.APIHandler):
         else:
             # Delete a single file
             filename = os.path.basename(filename)
-            safe_remove(self.get_macro_upload(filename))
+            safe_remove(self.get_macros_upload(filename))
             self.get_ctrl().preplanner.delete_plans(filename)
             self.get_ctrl().state.remove_file(filename)
 
     def put_ok(self, *args):
-        if not os.path.exists(self.get_macro_upload()):
-            os.mkdir(self.get_macro_upload())
+        if not os.path.exists(self.get_macros_upload()):
+            os.mkdir(self.get_macros_upload())
 
-        filename = self.get_macro_upload(self.uploadFilename).encode('utf8')
+        filename = self.get_macros_upload(self.uploadFilename).encode('utf8')
         safe_remove(filename)
         os.link(self.uploadFile.name, filename)
 
@@ -78,7 +78,7 @@ class MacroFileHandler(bbctrl.APIHandler):
         filename = os.path.basename(url_unescape(filename))
 
         try:
-            with open(self.get_macro_upload(filename).encode('utf8'), 'r') as f:
+            with open(self.get_macros_upload(filename).encode('utf8'), 'r') as f:
                 self.write(f.read())
         except Exception:
             self.get_ctrl().state.select_file('')
