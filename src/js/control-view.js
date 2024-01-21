@@ -510,7 +510,10 @@ module.exports = {
                 this.state.selected_time=this.config.macros[id].gcode_file_time
             }
             try{
-                this.load();
+                if (this.last_file != this.state.selected || this.last_file_time != this.state.selected_time) {
+                    this.last_file = file;
+                    this.last_file_time = file_time;
+                }
                 this.start_pause();
             }catch(error){
                 console.warn("Error running program: ",error);
