@@ -17,9 +17,6 @@ def safe_remove(path):
 
 @tornado.web.stream_request_body
 class MacrosFileHandler(bbctrl.APIHandler):
-    def __init__(self, ctrl):
-        self.log = ctrl.log.get('MacrosFileHandler')
-
     def prepare(self):
         if self.request.method == 'PUT':
             self.request.connection.set_max_body_size(2 ** 30)
@@ -57,7 +54,8 @@ class MacrosFileHandler(bbctrl.APIHandler):
     def put_ok(self, *args):
         if not os.path.exists(self.get_macros_upload()):
             os.mkdir(self.get_macros_upload())
-            self.log.info('get_macros_upload: ',self.get_macros_upload())
+            self.get_log('Macro FileHandler').info(
+            'get_macros_upload: ' + self.get_macros_upload())
 
         filename = self.get_macros_upload(self.uploadFilename).encode('utf8')
         safe_remove(filename)
