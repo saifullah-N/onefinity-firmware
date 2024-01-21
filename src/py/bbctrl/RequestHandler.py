@@ -48,6 +48,9 @@ class RequestHandler(tornado.web.RequestHandler):
 
     def get_upload(self, filename = None):
         return self.get_ctrl().get_upload(filename)
+    
+    def get_macros_upload(self, filename = None):
+        return self.get_ctrl().get_macros_upload(filename)
 
 
     # Override exception logging

@@ -299,7 +299,8 @@ class PathHandler(bbctrl.APIHandler):
     @gen.coroutine
     def get(self, filename, dataType, *args):
         if not os.path.exists(self.get_upload(filename)):
-            raise HTTPError(404, 'File not found')
+            if not os.path.exists(self.get_macros_upload(filename)):
+                raise HTTPError(404, 'File not found')
 
         preplanner = self.get_ctrl().preplanner
         future = preplanner.get_plan(filename)
@@ -646,6 +647,7 @@ class Web(tornado.web.Application):
             (r'/api/firmware/update', FirmwareUpdateHandler),
             (r'/api/upgrade', UpgradeHandler),
             (r'/api/file(/[^/]+)?', bbctrl.FileHandler),
+            (r'/api/macrosfile(/[^/]+)?', bbctrl.MacroFileHandler),
             (r'/api/path/([^/]+)((/positions)|(/speeds))?', PathHandler),
             (r'/api/home(/[xyzabcXYZABC]((/set)|(/clear))?)?', HomeHandler),
             (r'/api/start', StartHandler),

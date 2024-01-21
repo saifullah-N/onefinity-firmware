@@ -53,6 +53,7 @@ module.exports = {
       if (!files.length) {
         return;
       }
+      const pathName='/api/macrosfile/';
 
       const file = files[0];
       const extension = file.name.split(".").pop();
@@ -70,6 +71,7 @@ module.exports = {
 
       SvelteComponents.showDialog("Upload", {
         file,
+        pathName,
         onComplete: () => {
           this.last_file_time = undefined; // Force reload
           this.$broadcast("gcode-reload", file.name);
@@ -99,7 +101,7 @@ module.exports = {
           }
         };
 
-        xhr.open("PUT", `/api/file/${encodeURIComponent(filename)}`, true);
+        xhr.open("PUT", `/api/macrosfile/${encodeURIComponent(filename)}`, true);
         xhr.send(file);
 
         // this.load();
@@ -142,6 +144,9 @@ module.exports = {
       document.getElementById(`macros-color-${this.tab - 1}`).value = "#ffffff";
       document.getElementById(`gcodeSelect-${this.tab - 1}`).value = "default";
       this.$broadcast("gcode-clear");
+    },
+    printState: function(){
+      console.log(this.state);
     },
     resetConfig: async function () {
       this.config.macros = [

@@ -358,7 +358,7 @@ module.exports = {
             if (!files.length) {
                 return;
             }
-
+            const pathName='/api/file/';
             const file = files[0];
             const extension = file.name.split(".").pop();
             switch (extension.toLowerCase()) {
@@ -375,6 +375,7 @@ module.exports = {
 
             SvelteComponents.showDialog("Upload", {
                 file,
+                pathName,
                 onComplete: () => {
                     this.last_file_time = undefined; // Force reload
                     this.$broadcast("gcode-reload", file.name);

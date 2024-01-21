@@ -10,6 +10,7 @@
 
     export let open = false;
     export let file: File;
+    export let pathName: string;
     export let onComplete: () => void;
 
     let wasOpen = false;
@@ -52,7 +53,7 @@
             progress = event.loaded / event.total;
         };
 
-        xhr.open("PUT", `/api/file/${encodeURIComponent(file.name)}`);
+        xhr.open("PUT", `${pathName}${encodeURIComponent(file.name)}`);
         xhr.send(file);
     }
 
