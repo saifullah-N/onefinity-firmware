@@ -31,6 +31,7 @@ class MacrosFileHandler(bbctrl.APIHandler):
                 .replace('?', '-')
 
             self.uploadFile = tempfile.NamedTemporaryFile("wb")
+            self.get_log('Macro FileHandler').info('self.uploadFile ' + self.uploadFile)
 
     def data_received(self, data):
         if self.request.method == 'PUT':
@@ -64,8 +65,9 @@ class MacrosFileHandler(bbctrl.APIHandler):
 
         del (self.uploadFile)
 
+        self.get_log('Macro FileHandler').info('self.get_ctrl() ' + self.get_ctrl())
         self.get_ctrl().preplanner.invalidate(self.uploadFilename)
-        self.get_ctrl().state.add_file(self.uploadFilename)
+        self.get_ctrl().state.add_macros_file(self.uploadFilename)
         self.get_log('Macro FileHandler').info(
             'GCode received: ' + self.uploadFilename)
 
@@ -79,11 +81,13 @@ class MacrosFileHandler(bbctrl.APIHandler):
         filename = os.path.basename(url_unescape(filename))
 
         try:
+            self.get_log('Macro FileHandler').info('self.get_macros_upload(filename).encode(\'utf8\') ' + self.get_macros_upload(filename).encode('utf8'))
             with open(self.get_macros_upload(filename).encode('utf8'), 'r') as f:
                 self.write(f.read())
         except Exception:
-            self.get_ctrl().state.select_file('')
+            self.get_ctrl().state.select_macros_file('')
             raise HTTPError(
                 400, "Unable to read file - doesn't appear to be GCode.")
 
-        self.get_ctrl().state.select_file(filename)
+        self.get_ctrl().state.select_macros_file(filename)
+        self.get_log('Macro FileHandler').info(' self.get_ctrl().state.select_macros_file(filename) ' +  self.get_ctrl().state.select_macros_file(filename))

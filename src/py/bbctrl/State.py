@@ -142,12 +142,25 @@ class State(object):
 
     def add_file(self, filename):
         files = copy.deepcopy(self.get('files'))
+        self.log.info('add_files files: '+files)
         if not filename in files:
             files.append(filename)
             files.sort()
             self.set('files', files)
+            self.log.info('add_files files after sorting: '+files)
 
         self.select_file(filename)
+    
+    def add_macros_file(self, filename):
+        files = copy.deepcopy(self.get('files'))
+        self.log.info('add_files files: '+files)
+        if not filename in files:
+            files.append(filename)
+            files.sort()
+            self.set('files', files)
+            self.log.info('add_files files after sorting: '+files)
+
+        self.select_macros_file(filename)
 
 
     def remove_file(self, filename):
@@ -166,6 +179,10 @@ class State(object):
         time = os.path.getmtime(self.ctrl.get_upload(filename))
         self.set('selected_time', time)
 
+    def select_macros_file(self, filename):
+        self.set('selectedmacros', filename)
+        time = os.path.getmtime(self.ctrl.get_macros_upload(filename))
+        self.set('selectedmacros_time', time)
 
     def set_bounds(self, bounds):
         for axis in 'xyzabc':
