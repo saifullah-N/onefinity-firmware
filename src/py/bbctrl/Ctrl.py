@@ -94,7 +94,7 @@ class Ctrl(object):
         return self.get_path('upload', filename)
     
     def get_macros_upload(self, filename = None):
-        return self.get_path('macroupload', filename)
+        return self.get_path('macrosupload', filename)
 
 
     def get_plan(self, filename = None):

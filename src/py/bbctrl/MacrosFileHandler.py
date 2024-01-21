@@ -54,8 +54,7 @@ class MacrosFileHandler(bbctrl.APIHandler):
     def put_ok(self, *args):
         if not os.path.exists(self.get_macros_upload()):
             os.mkdir(self.get_macros_upload())
-            self.get_log('Macro FileHandler').info(
-            'get_macros_upload: ' + self.get_macros_upload())
+        self.get_log('Macro FileHandler').info('get_macros_upload: ' + self.get_macros_upload())
 
         filename = self.get_macros_upload(self.uploadFilename).encode('utf8')
         safe_remove(filename)
