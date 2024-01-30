@@ -227,6 +227,9 @@ script#control-view-template(type="text/x-template")
     .macros-div(class="present")
        button.macros-button(title="Click to run Macros",v-for="(index,macros) in config.macros",
           @click="runMacros(index)",:disabled="!state.selected",v-bind:style="{ backgroundColor: macros.color }") {{macros.name}}
+    
+
+    button.submit-macros(title="Cancel Macros",@click="printState",style="margin-left:5px") Print State
 
     .tabs
      

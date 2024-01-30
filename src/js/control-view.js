@@ -585,6 +585,9 @@ module.exports = {
     },
 
     runMacros: function (id) {
+      if (this.state.macros_xx == "RUNNING") {
+        this.macros_start_pause();
+      }
       this.state.previous_state = {
         file: this.state.selected,
         line: this.state.line,
@@ -604,6 +607,9 @@ module.exports = {
           console.warn("Error running program: ", error);
         }
       }
+    },
+    printState: function () {
+      console.log(this.state);
     },
   },
 
