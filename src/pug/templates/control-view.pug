@@ -25,7 +25,7 @@ script#control-view-template(type="text/x-template")
             
         div(slot="footer")
           button.pure-button(@click="macrosLoading=false") Cancel
-          button.pure-button.pure-button-primary(@click="start_pause") Run
+          button.pure-button.pure-button-primary(@click="macros_start_pause") Run
 
     table(style="table-layout: fixed; width: 100%;")
       tr(style="height: fit-content;")
@@ -226,7 +226,7 @@ script#control-view-template(type="text/x-template")
 
     .macros-div(class="present")
        button.macros-button(title="Click to run Macros",v-for="(index,macros) in config.macros",
-          @click="runMacros(index)",:disabled="!is_ready",v-bind:style="{ backgroundColor: macros.color }") {{macros.name}}
+          @click="runMacros(index)",:disabled="!state.selected",v-bind:style="{ backgroundColor: macros.color }") {{macros.name}}
 
     .tabs
      

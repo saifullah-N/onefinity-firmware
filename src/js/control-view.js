@@ -117,6 +117,9 @@ module.exports = {
     },
 
     is_running: function () {
+      if (this.state.macros_xx == "RUNNING" || this.state.macros_xx == "PAUSED") {
+        return false;
+      }
       return this.mach_state == "RUNNING" || this.mach_state == "HOMING";
     },
 
@@ -492,13 +495,44 @@ module.exports = {
     },
 
     start_pause: function () {
-      this.macrosLoading = false;
+      if (this.state.previous_state.line != undefined) {
+        if (this.state.previous_state.file == this.state.selected && this.state.previous_state.line != 0) {
+          this.state.line = this.state.previous_state.line;
+        } else if (this.state.previous_state.file != this.state.selected) {
+          this.state.previous_state = {
+            file: this.state.selected,
+            line: this.state.line,
+          };
+        } else if (this.state.previous_state.line == 0) {
+          this.state.previous_state.line = this.state.line;
+        }
+      } else {
+        this.state.previous_state = {
+          file: this.state.selected,
+          line: this.state.line,
+        };
+      }
+      console.log("running this file: ", this.state.selected, this.state.line);
       if (this.state.xx == "RUNNING") {
         this.pause();
       } else if (this.state.xx == "STOPPING" || this.state.xx == "HOLDING") {
         this.unpause();
       } else {
         this.start();
+      }
+    },
+
+    macros_start_pause: function () {
+      this.macrosLoading = false;
+      if (this.state.xx == "RUNNING") {
+        this.pause();
+        this.state.macros_xx = "PAUSED";
+      } else if (this.state.xx == "STOPPING" || this.state.xx == "HOLDING") {
+        this.unpause();
+        this.state.macros_xx = "UNPAUSED";
+      } else {
+        this.start();
+        this.state.macros_xx = "RUNNING";
       }
     },
 
@@ -519,6 +553,7 @@ module.exports = {
     },
 
     stop: function () {
+      this.state.previous_state = undefined;
       api.put("stop");
     },
 
@@ -548,8 +583,13 @@ module.exports = {
     showProbeDialog: function (probeType) {
       SvelteComponents.showDialog("Probe", { probeType });
     },
+
     runMacros: function (id) {
-      console.log("index", id);
+      this.state.previous_state = {
+        file: this.state.selected,
+        line: this.state.line,
+      };
+      console.log("data: ", this.state.line);
       if (this.config.macros[id].file_name == "default") {
         this.showNoGcodeMessage = true;
       } else {
