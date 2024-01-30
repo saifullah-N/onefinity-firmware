@@ -495,7 +495,7 @@ module.exports = {
     },
 
     start_pause: function () {
-      if (this.state.previous_state.line != undefined) {
+      if (this.state.previous_state != undefined) {
         if (this.state.previous_state.file == this.state.selected && this.state.previous_state.line != 0) {
           this.state.line = this.state.previous_state.line;
         } else if (this.state.previous_state.file != this.state.selected) {
