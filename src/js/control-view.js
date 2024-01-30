@@ -117,10 +117,7 @@ module.exports = {
     },
 
     is_running: function () {
-      if (this.state.macros_xx == "RUNNING" || this.state.macros_xx == "PAUSED") {
-        return false;
-      }
-      return this.mach_state == "RUNNING" || this.mach_state == "HOMING";
+      return this.state.macros_xx != "RUNNING" && (this.mach_state == "RUNNING" || this.mach_state == "HOMING");
     },
 
     is_stopping: function () {
@@ -587,6 +584,7 @@ module.exports = {
     runMacros: function (id) {
       if (this.state.macros_xx == "RUNNING") {
         this.macros_start_pause();
+        return;
       }
       this.state.previous_state = {
         file: this.state.selected,
