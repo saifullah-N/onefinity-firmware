@@ -599,6 +599,7 @@ module.exports = {
         }
         try {
           this.load();
+          console.log("selected", this.state.selected);
           this.macrosLoading = true;
           // this.start_pause();
         } catch (error) {
